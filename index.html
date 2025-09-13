@@ -29,10 +29,6 @@
                             <i class="fas fa-chart-line"></i>
                             Dashboard
                         </button>
-                        <button id="admin-btn" class="nav-btn">
-                            <i class="fas fa-cog"></i>
-                            Admin
-                        </button>
                         <button id="history-btn" class="nav-btn">
                             <i class="fas fa-history"></i>
                             History
@@ -48,37 +44,37 @@
                 <div class="section-header">
                     <h2>Dashboard</h2>
                     <div class="month-display">
-                        <span id="current-month">September 2025</span>
+                        <span id="current-month">Loading...</span>
                     </div>
                 </div>
 
                 <!-- Summary Cards -->
                 <div class="summary-cards">
-                    <div class="card">
+                    <div class="card total-collected">
                         <div class="card-icon">
                             <i class="fas fa-wallet"></i>
                         </div>
                         <div class="card-content">
                             <h3>Total Collected</h3>
-                            <p class="amount" id="total-collected">10 OMR</p>
+                            <p class="amount" id="total-collected">0 OMR</p>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card total-spent">
                         <div class="card-icon">
                             <i class="fas fa-receipt"></i>
                         </div>
                         <div class="card-content">
                             <h3>Total Spent</h3>
-                            <p class="amount" id="total-spent">7 OMR</p>
+                            <p class="amount" id="total-spent">0 OMR</p>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card remaining">
                         <div class="card-icon">
                             <i class="fas fa-piggy-bank"></i>
                         </div>
                         <div class="card-content">
                             <h3>Remaining</h3>
-                            <p class="amount" id="remaining">3 OMR</p>
+                            <p class="amount" id="remaining">0 OMR</p>
                         </div>
                     </div>
                 </div>
@@ -95,62 +91,6 @@
                 <div class="bills-section">
                     <h3>Recent Bills</h3>
                     <div class="bills-list" id="bills-list">
-                        <!-- Bills will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Admin Section -->
-        <section id="admin" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Admin Panel</h2>
-                    <div class="admin-controls">
-                        <button id="next-month-btn" class="btn btn-primary">
-                            <i class="fas fa-forward"></i>
-                            Next Month
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Add Member -->
-                <div class="admin-card">
-                    <h3>Add New Member</h3>
-                    <div class="form-group">
-                        <input type="text" id="new-member-name" placeholder="Member Name" class="input">
-                        <button id="add-member-btn" class="btn btn-secondary">
-                            <i class="fas fa-user-plus"></i>
-                            Add Member
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Manage Payments -->
-                <div class="admin-card">
-                    <h3>Manage Payments</h3>
-                    <div class="payment-management" id="payment-management">
-                        <!-- Payment controls will be populated by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Add Bill -->
-                <div class="admin-card">
-                    <h3>Add New Bill</h3>
-                    <div class="form-group">
-                        <input type="number" id="bill-amount" placeholder="Amount (OMR)" class="input" step="0.01">
-                        <input type="text" id="bill-description" placeholder="Description" class="input">
-                        <button id="add-bill-btn" class="btn btn-secondary">
-                            <i class="fas fa-plus"></i>
-                            Add Bill
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Current Month Bills -->
-                <div class="admin-card">
-                    <h3>Current Month Bills</h3>
-                    <div class="admin-bills-list" id="admin-bills-list">
                         <!-- Bills will be populated by JavaScript -->
                     </div>
                 </div>
@@ -177,6 +117,8 @@
         </footer>
     </div>
 
+    <!-- Scripts -->
+    <script src="admin.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

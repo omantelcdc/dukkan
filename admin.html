@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDC Dukkan - Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Admin Panel Specific Styles */
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+        .admin-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #1a1a1a;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .admin-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .admin-header h1 {
+            font-size: 2.5rem;
+            color: #2d13e9;
+            margin-bottom: 10px;
+        }
+        .admin-header p {
+            color: #ccc;
+        }
+        .admin-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 15px;
+            border: 1px solid #333;
+        }
+        .admin-section h2 {
+            font-size: 1.8rem;
+            color: #ff7901;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .form-group label {
+            flex-basis: 100px;
+            color: #ccc;
+        }
+        .form-group input[type="text"], .form-group input[type="number"] {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border: 1px solid #555;
+            border-radius: 10px;
+            background: #1a1a1a;
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input[type="text"]:focus, .form-group input[type="number"]:focus {
+            outline: none;
+            border-color: #2d13e9;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            color: white;
+        }
+        .btn-primary {
+            background: #2d13e9;
+        }
+        .btn-secondary {
+            background: #ff7901;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .data-list {
+            margin-top: 20px;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+        .data-item:last-child {
+            border-bottom: none;
+        }
+        .data-item span {
+            color: #ccc;
+        }
+        .data-item .name {
+            font-weight: 600;
+            color: #fff;
+        }
+        .data-item .amount {
+            color: #ff7901;
+            font-weight: 700;
+        }
+        .data-item .status {
+            color: #2d13e9;
+            font-weight: 600;
+        }
+        .data-item .status.unpaid {
+            color: #ff7901;
+        }
+        .data-item .actions button {
+            margin-left: 10px;
+        }
+        .output-section {
+            margin-top: 40px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .output-section h2 {
+            color: #2d13e9;
+            margin-bottom: 15px;
+        }
+        #admin-js-output {
+            width: 100%;
+            height: 400px;
+            background: #1a1a1a;
+            border: 1px solid #555;
+            border-radius: 10px;
+            padding: 15px;
+            color: #eee;
+            font-family: monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .copy-btn {
+            margin-top: 15px;
+            width: 100%;
+            background: #ff7901;
+        }
+        .copy-btn:hover {
+            background: #e66a00;
+        }
+        .member-payment-toggle {
+            background: #ff7901;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .member-payment-toggle.paid {
+            background: #2d13e9;
+        }
+        .member-payment-toggle:hover {
+            opacity: 0.9;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .delete-btn:hover {
+            background: #c82333;
+        }
+        @media (max-width: 768px) {
+            .admin-container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            .form-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .form-group label {
+                flex-basis: auto;
+            }
+            .btn {
+                width: 100%;
+            }
+            .data-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .data-item .actions {
+                margin-top: 10px;
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+            }
+            .data-item .actions button {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>CDC Dukkan Admin Panel</h1>
+            <p>Manage your team's grocery data. Changes made here will generate an updated `admin.js` file for you to copy and paste into your repository.</p>
+        </div>
+
+        <div class="admin-section">
+            <h2>Current Month</h2>
+            <div class="form-group">
+                <label for="current-month-input">Month:</label>
+                <input type="text" id="current-month-input" class="input">
+                <label for="monthly-payment-input">Monthly Payment (OMR):</label>
+                <input type="number" id="monthly-payment-input" class="input" step="0.01">
+                <button id="update-settings-btn" class="btn btn-primary"><i class="fas fa-save"></i> Update Settings</button>
+            </div>
+            <div class="form-group">
+                <button id="move-to-next-month-btn" class="btn btn-secondary"><i class="fas fa-forward"></i> Move to Next Month</button>
+            </div>
+        </div>
+
+        <div class="admin-section">
+            <h2>Members</h2>
+            <div class="form-group">
+                <label for="new-member-name">Name:</label>
+                <input type="text" id="new-member-name" placeholder="Member Name" class="input">
+                <button id="add-member-btn" class="btn btn-primary"><i class="fas fa-user-plus"></i> Add Member</button>
+            </div>
+            <div class="data-list" id="members-list">
+                <!-- Members will be populated here -->
+            </div>
+        </div>
+
+        <div class="admin-section">
+            <h2>Bills</h2>
+            <div class="form-group">
+                <label for="bill-amount">Amount (OMR):</label>
+                <input type="number" id="bill-amount" placeholder="Amount" class="input" step="0.01">
+                <label for="bill-description">Description:</label>
+                <input type="text" id="bill-description" placeholder="Description" class="input">
+                <label for="bill-date">Date (MM/DD/YYYY):</label>
+                <input type="text" id="bill-date" placeholder="MM/DD/YYYY" class="input">
+                <button id="add-bill-btn" class="btn btn-primary"><i class="fas fa-plus"></i> Add Bill</button>
+            </div>
+            <div class="data-list" id="bills-list">
+                <!-- Bills will be populated here -->
+            </div>
+        </div>
+
+        <div class="output-section">
+            <h2>Generated `admin.js` Content</h2>
+            <textarea id="admin-js-output" readonly></textarea>
+            <button id="copy-admin-js-btn" class="btn copy-btn"><i class="fas fa-copy"></i> Copy to Clipboard</button>
+            <p style="color: #ccc; font-size: 0.9rem; margin-top: 10px;">Copy the content above and paste it into your `admin.js` file in your GitHub repository.</p>
+        </div>
+    </div>
+
+    <script>
+        // Initial data structure (will be loaded from/generated to admin.js)
+        let cdcData = {
+            currentMonth: 'September 2025',
+            monthlyPayment: 5,
+            members: [
+                { name: 'Ismail', paid: true },
+                { name: 'Basil', paid: true }
+            ],
+            bills: [
+                { id: 1, amount: 7.00, description: 'Grocery Shopping', date: '9/13/2025', month: 'September 2025' }
+            ],
+            history: []
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInitialData();
+            renderAdminPanel();
+            setupEventListeners();
+            generateAdminJS();
+        });
+
+        function loadInitialData() {
+            // This function would typically load from an existing admin.js
+            // For this interactive panel, we start with a default or last saved state
+            // If you had a way to read admin.js content, you'd parse it here.
+            // For now, we use the hardcoded `cdcData` above as the starting point.
+            document.getElementById('current-month-input').value = cdcData.currentMonth;
+            document.getElementById('monthly-payment-input').value = cdcData.monthlyPayment;
+        }
+
+        function renderAdminPanel() {
+            renderMembers();
+            renderBills();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('update-settings-btn').addEventListener('click', updateSettings);
+            document.getElementById('move-to-next-month-btn').addEventListener('click', moveToNextMonth);
+            document.getElementById('add-member-btn').addEventListener('click', addMember);
+            document.getElementById('add-bill-btn').addEventListener('click', addBill);
+            document.getElementById('copy-admin-js-btn').addEventListener('click', copyAdminJSOutput);
+        }
+
+        function updateSettings() {
+            cdcData.currentMonth = document.getElementById('current-month-input').value;
+            cdcData.monthlyPayment = parseFloat(document.getElementById('monthly-payment-input').value);
+            generateAdminJS();
+            alert('Settings updated! Copy the new admin.js content.');
+        }
+
+        function moveToNextMonth() {
+            // Save current month to history
+            const currentMonthBills = cdcData.bills.filter(bill => bill.month === cdcData.currentMonth);
+            const totalCollected = cdcData.members.filter(m => m.paid).length * cdcData.monthlyPayment;
+            const totalSpent = currentMonthBills.reduce((sum, bill) => sum + bill.amount, 0);
+            
+            const monthData = {
+                month: cdcData.currentMonth,
+                members: JSON.parse(JSON.stringify(cdcData.members)), // Deep copy
+                bills: JSON.parse(JSON.stringify(currentMonthBills)),
+                totalCollected: totalCollected,
+                totalSpent: totalSpent
+            };
+            
+            cdcData.history.unshift(monthData);
+            
+            // Calculate next month
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            
+            const currentMonthParts = cdcData.currentMonth.split(' ');
+            const currentMonthName = currentMonthParts[0];
+            const currentYear = parseInt(currentMonthParts[1]);
+            
+            let nextMonthIndex = monthNames.indexOf(currentMonthName) + 1;
+            let nextYear = currentYear;
+            
+            if (nextMonthIndex >= 12) {
+                nextMonthIndex = 0;
+                nextYear++;
+            }
+            
+            cdcData.currentMonth = `${monthNames[nextMonthIndex]} ${nextYear}`;
+            
+            // Reset all payment statuses
+            cdcData.members.forEach(member => {
+                member.paid = false;
+            });
+
+            // Update current month input field
+            document.getElementById('current-month-input').value = cdcData.currentMonth;
+            
+            renderAdminPanel();
+            generateAdminJS();
+            alert(`Moved to ${cdcData.currentMonth}. All payment statuses reset. Copy the new admin.js content.`);
+        }
+
+        function renderMembers() {
+            const membersList = document.getElementById('members-list');
+            membersList.innerHTML = '';
+            cdcData.members.forEach((member, index) => {
+                const memberItem = document.createElement('div');
+                memberItem.className = 'data-item';
+                memberItem.innerHTML = `
+                    <span class="name">${member.name}</span>
+                    <div class="actions">
+                        <button class="member-payment-toggle ${member.paid ? 'paid' : ''}" data-index="${index}">
+                            ${member.paid ? 'Paid ✅' : 'Not Paid ❌'}
+                        </button>
+                        <button class="delete-btn" data-type="member" data-index="${index}"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                membersList.appendChild(memberItem);
+            });
+            document.querySelectorAll('.member-payment-toggle').forEach(button => {
+                button.addEventListener('click', toggleMemberPayment);
+            });
+            document.querySelectorAll('.delete-btn[data-type="member"]').forEach(button => {
+                button.addEventListener('click', deleteItem);
+            });
+        }
+
+        function addMember() {
+            const newMemberNameInput = document.getElementById('new-member-name');
+            const name = newMemberNameInput.value.trim();
+            if (name) {
+                cdcData.members.push({ name: name, paid: false });
+                newMemberNameInput.value = '';
+                renderMembers();
+                generateAdminJS();
+            }
+        }
+
+        function toggleMemberPayment(event) {
+            const index = event.target.dataset.index;
+            cdcData.members[index].paid = !cdcData.members[index].paid;
+            renderMembers();
+            generateAdminJS();
+        }
+
+        function renderBills() {
+            const billsList = document.getElementById('bills-list');
+            billsList.innerHTML = '';
+            const currentMonthBills = cdcData.bills.filter(bill => bill.month === cdcData.currentMonth);
+            currentMonthBills.forEach((bill, index) => {
+                const billItem = document.createElement('div');
+                billItem.className = 'data-item';
+                billItem.innerHTML = `
+                    <div>
+                        <span class="name">${bill.description}</span>
+                        <span class="amount">${bill.amount.toFixed(2)} OMR</span>
+                        <span style="font-size:0.8em; color:#aaa;">(${bill.date})</span>
+                    </div>
+                    <div class="actions">
+                        <button class="delete-btn" data-type="bill" data-id="${bill.id}"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                billsList.appendChild(billItem);
+            });
+            document.querySelectorAll('.delete-btn[data-type="bill"]').forEach(button => {
+                button.addEventListener('click', deleteItem);
+            });
+        }
+
+        function addBill() {
+            const billAmountInput = document.getElementById('bill-amount');
+            const billDescriptionInput = document.getElementById('bill-description');
+            const billDateInput = document.getElementById('bill-date');
+
+            const amount = parseFloat(billAmountInput.value);
+            const description = billDescriptionInput.value.trim();
+            const date = billDateInput.value.trim();
+
+            if (amount > 0 && description && date) {
+                const newId = cdcData.bills.length > 0 ? Math.max(...cdcData.bills.map(b => b.id)) + 1 : 1;
+                cdcData.bills.push({
+                    id: newId,
+                    amount: amount,
+                    description: description,
+                    date: date,
+                    month: cdcData.currentMonth
+                });
+                billAmountInput.value = '';
+                billDescriptionInput.value = '';
+                billDateInput.value = '';
+                renderBills();
+                generateAdminJS();
+            }
+        }
+
+        function deleteItem(event) {
+            const type = event.target.closest('button').dataset.type;
+            if (type === 'member') {
+                const index = event.target.closest('button').dataset.index;
+                cdcData.members.splice(index, 1);
+                renderMembers();
+            } else if (type === 'bill') {
+                const id = parseInt(event.target.closest('button').dataset.id);
+                cdcData.bills = cdcData.bills.filter(bill => bill.id !== id);
+                renderBills();
+            }
+            generateAdminJS();
+        }
+
+        function generateAdminJS() {
+            const outputTextArea = document.getElementById('admin-js-output');
+            const jsContent = `/*\n * CDC DUKKAN - ADMIN DATA MANAGEMENT\n * \n * This file contains all the data for the CDC Dukkan website.\n * To update the website, simply copy the content from admin.html output\n * and paste it into this file, then push to GitHub.\n * \n * DO NOT EDIT THIS FILE MANUALLY IF YOU ARE USING admin.html\n */\n\nwindow.cdcData = ${JSON.stringify(cdcData, null, 4)};\n\n// This function is called by script.js to refresh the display\n// after new data is loaded (e.g., after you update admin.js and refresh the main site)\nif (typeof window.cdcDukkan !== 'undefined') {\n    window.cdcDukkan.refreshData();\n}\n`;
+            outputTextArea.value = jsContent;
+        }
+
+        function copyAdminJSOutput() {
+            const outputTextArea = document.getElementById('admin-js-output');
+            outputTextArea.select();
+            document.execCommand('copy');
+            alert('admin.js content copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
+
