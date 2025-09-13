@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDC Dukkan - Team Grocery Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-content">
+            <h1 class="welcome-title">Welcome to</h1>
+            <h2 class="welcome-brand">CDC Dukkan</h2>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="main-app hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <h1 class="logo">CDC Dukkan</h1>
+                    <nav class="nav">
+                        <button id="dashboard-btn" class="nav-btn active">
+                            <i class="fas fa-chart-line"></i>
+                            Dashboard
+                        </button>
+                        <button id="admin-btn" class="nav-btn">
+                            <i class="fas fa-cog"></i>
+                            Admin
+                        </button>
+                        <button id="history-btn" class="nav-btn">
+                            <i class="fas fa-history"></i>
+                            History
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <div class="month-display">
+                        <span id="current-month">September 2025</span>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="summary-cards">
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Total Collected</h3>
+                            <p class="amount" id="total-collected">10 OMR</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Total Spent</h3>
+                            <p class="amount" id="total-spent">7 OMR</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Remaining</h3>
+                            <p class="amount" id="remaining">3 OMR</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Members Payment Status -->
+                <div class="members-section">
+                    <h3>Payment Status</h3>
+                    <div class="members-grid" id="members-grid">
+                        <!-- Members will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Recent Bills -->
+                <div class="bills-section">
+                    <h3>Recent Bills</h3>
+                    <div class="bills-list" id="bills-list">
+                        <!-- Bills will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Admin Panel</h2>
+                    <div class="admin-controls">
+                        <button id="next-month-btn" class="btn btn-primary">
+                            <i class="fas fa-forward"></i>
+                            Next Month
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add Member -->
+                <div class="admin-card">
+                    <h3>Add New Member</h3>
+                    <div class="form-group">
+                        <input type="text" id="new-member-name" placeholder="Member Name" class="input">
+                        <button id="add-member-btn" class="btn btn-secondary">
+                            <i class="fas fa-user-plus"></i>
+                            Add Member
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Manage Payments -->
+                <div class="admin-card">
+                    <h3>Manage Payments</h3>
+                    <div class="payment-management" id="payment-management">
+                        <!-- Payment controls will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Add Bill -->
+                <div class="admin-card">
+                    <h3>Add New Bill</h3>
+                    <div class="form-group">
+                        <input type="number" id="bill-amount" placeholder="Amount (OMR)" class="input" step="0.01">
+                        <input type="text" id="bill-description" placeholder="Description" class="input">
+                        <button id="add-bill-btn" class="btn btn-secondary">
+                            <i class="fas fa-plus"></i>
+                            Add Bill
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Current Month Bills -->
+                <div class="admin-card">
+                    <h3>Current Month Bills</h3>
+                    <div class="admin-bills-list" id="admin-bills-list">
+                        <!-- Bills will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section id="history" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>History</h2>
+                </div>
+                <div class="history-list" id="history-list">
+                    <!-- History will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>Powered by Basil & Ismail</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
